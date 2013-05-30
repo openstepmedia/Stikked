@@ -16,9 +16,9 @@ $config['site_name'] = 'Stikked';
  *
 */
 $config['db_hostname'] = '127.0.0.1';
-$config['db_database'] = 'stikked';
-$config['db_username'] = 'stikked';
-$config['db_password'] = 'stikked';
+$config['db_database'] = 'kodeboard';
+$config['db_username'] = 'root';
+$config['db_password'] = '';
 
 /**
  * Theme
@@ -28,7 +28,7 @@ $config['db_password'] = 'stikked';
  * Currently: default, bootstrap, gabdark, gabdark3, geocities
  *
 */
-$config['theme'] = 'default';
+$config['theme'] = 'bootstrap';
 
 /**
  * Language

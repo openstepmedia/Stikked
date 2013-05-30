@@ -204,7 +204,7 @@ class DB_Session {
 				$this->sess_destroy();
 				return FALSE;
 			} else {
-				$session = @unserialize($row->session_data);
+				$session = @unserialize($row->user_data);
 				if ( ! is_array($session) ) {
 					$session = array();
 				}
@@ -308,7 +308,7 @@ class DB_Session {
 		unset($ud['last_activity']);
 		unset($ud['user_agent']);
 		unset($ud['ip_address']);
-		$query_array['session_data'] = serialize($ud);
+		$query_array['user_data'] = serialize($ud);
 		$this->object->db->query($this->object->db->update_string($this->session_table, $query_array, array('session_id' => $this->userdata['session_id'])));
 		
 		// Write the cookie

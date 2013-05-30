@@ -1,2 +1,6 @@
 .DS_Store
 htdocs/static/asset/*
+htdocs/captcha/*.jpg
+htdocs/application/config/stikked.php
+
+
