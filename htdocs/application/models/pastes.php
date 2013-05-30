@@ -369,7 +369,7 @@ class Pastes extends CI_Model
 		return $data;
 	}
 	
-	function getLists($root = 'lists/', $seg = 2) 
+	function getLists($root = 'lists/', $seg = 2, $lang = "") 
 	{
 		$this->load->library('pagination');
 		$this->load->library('process');
@@ -377,6 +377,9 @@ class Pastes extends CI_Model
 		$page = ($this->uri->segment(2) ? $this->uri->segment(2) : 0);
 		$this->db->select('id, title, name, created, pid, lang, raw');
 		$this->db->where('private', 0);
+                
+                
+                
 		$this->db->order_by('created', 'desc');
 		$query = $this->db->get('pastes', $amount, $page);
 		

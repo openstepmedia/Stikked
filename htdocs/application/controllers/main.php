@@ -323,7 +323,16 @@ class Main extends CI_Controller
         function index() {
 		$this->_valid_authentication();
 		$this->load->helper('json');
+                
+                $this->load->model('pastes');
+                
+                $data['recent'] = $this->pastes->getLists();
+                $data['trends'] = $this->pastes->getTrends();
+                
+                
 		$this->load->view('home', $data);
+                
+                
         }
         
 	function add() 

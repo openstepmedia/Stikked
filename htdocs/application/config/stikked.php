@@ -6,7 +6,7 @@
  * The name of your site
  *
 */
-$config['site_name'] = 'Stikked';
+$config['site_name'] = 'Kodeboard';
 
 /**
  * Database connection

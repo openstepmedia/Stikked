@@ -1,3 +1,4 @@
+<?php $this->load->view("defaults/header"); ?>
 <?php
 $login = array(
 	'name'	=> 'login',
@@ -89,5 +90,6 @@ $captcha = array(
 		</td>
 	</tr>
 </table>
-<?php echo form_submit('submit', 'Let me in'); ?>
+<?php echo form_submit('submit', 'Let me in', "class='btn btn-primary'"); ?>
 <?php echo form_close(); ?>
+<?php $this->load->view("defaults/footer"); ?>

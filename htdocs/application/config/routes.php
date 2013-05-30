@@ -62,6 +62,12 @@ $route['spamadmin/:any'] = 'spamadmin/spam_detail';
 $route['about'] = 'main/about';
 $route['add'] = 'main/add';
 
+//auth:
+$route['register'] = 'auth/register';
+$route['login'] = 'auth/login';
+$route['logout'] = 'auth/logout';
+$route['forgot_password'] = 'auth/forgot_password';
+
 $route['iphone/:num'] = 'iphone';
 $route['iphone/view/:any'] = 'iphone/view';
 

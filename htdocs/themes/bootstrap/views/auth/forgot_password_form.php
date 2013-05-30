@@ -1,3 +1,4 @@
+<?php $this->load->view("defaults/header"); ?>
 <?php
 $login = array(
 	'name'	=> 'login',
@@ -20,5 +21,6 @@ if ($this->config->item('use_username', 'tank_auth')) {
 		<td style="color: red;"><?php echo form_error($login['name']); ?><?php echo isset($errors[$login['name']])?$errors[$login['name']]:''; ?></td>
 	</tr>
 </table>
-<?php echo form_submit('reset', 'Get a new password'); ?>
+<?php echo form_submit('reset', 'Get a new password', 'class="btn btn-primary"'); ?>
 <?php echo form_close(); ?>
+<?php $this->load->view("defaults/footer"); ?>

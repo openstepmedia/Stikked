@@ -1,3 +1,4 @@
+<?php $this->load->view("defaults/header"); ?>
 <?php
 if ($use_username) {
 	$username = array(
@@ -96,5 +97,6 @@ $captcha = array(
 	<?php }
 	} ?>
 </table>
-<?php echo form_submit('register', 'Register'); ?>
+<?php echo form_submit('register', 'Register', 'class="btn btn-primary"'); ?>
 <?php echo form_close(); ?>
+<?php $this->load->view("defaults/footer"); ?>

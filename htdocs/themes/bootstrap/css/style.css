@@ -105,3 +105,63 @@ table.table thead .sorting_desc_disabled { background: url('../images/sort_desc_
 	padding: 5px;
 }
 
+header {
+    margin-bottom:20px;
+}
+
+
+.span2 input {
+    width:165px;
+}
+.span2 input.btn {
+    width:175px;
+}
+.home .recent section {
+    padding-right:30px;
+}
+.home .popular section {
+    border-left:1px solid #000;
+    margin-left:0;
+    padding-left:20px;
+}
+.home .sidebar {
+}
+.home a.item {
+    font-size:14px;
+    font-weight:bold;
+    color:#000;
+}
+.home .popular {
+    margin-left:0;
+}
+
+.home ul.breadcrumb {
+    border:none;
+    background:none;
+    border-radius: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    padding:0;
+    margin:0;
+    
+    border-bottom:1px solid;
+    font-size:10px;
+    padding-left:0;
+    text-transform: uppercase;
+}
+
+.home .content {
+    border-right:1px solid #000;
+}
+.home .unstyled li {
+    margin-top:5px;
+    margin-bottom:5px;
+    border-bottom:1px dotted #0088cc;
+    padding-bottom:10px;
+    padding-top:10px;
+}
+.home h1 {
+    border-bottom:4px solid #000;
+    margin-bottom:10px;
+    margin-right:25px;
+}
