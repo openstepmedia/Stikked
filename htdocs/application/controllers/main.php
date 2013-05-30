@@ -320,15 +320,21 @@ class Main extends CI_Controller
 		return $data;
 	}
 	
-	function index() 
+        function index() {
+		$this->_valid_authentication();
+		$this->load->helper('json');
+		$this->load->view('home', $data);
+        }
+        
+	function add() 
 	{
 		$this->_valid_authentication();
 		$this->load->helper('json');
-		
+
 		if (!$this->input->post('submit')) 
 		{
 			$data = $this->_form_prep();
-			$this->load->view('home', $data);
+			$this->load->view('add', $data);
 		}
 		else
 		{
@@ -377,7 +383,7 @@ class Main extends CI_Controller
 			if ($this->form_validation->run() == FALSE) 
 			{
 				$data = $this->_form_prep();
-				$this->load->view('home', $data);
+				$this->load->view('add', $data);
 			}
 			else
 			{
@@ -398,7 +404,8 @@ class Main extends CI_Controller
 					);
 					$this->db_session->set_userdata($user_data);
 				}
-				redirect($this->pastes->createPaste());
+                                $redirect = $this->pastes->createPaste();
+				redirect($redirect);
 			}
 		}
 	}

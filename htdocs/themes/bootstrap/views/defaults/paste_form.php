@@ -15,7 +15,7 @@
 		
 	</div>
 	<div class="span12">
-		<form action="<?php echo base_url(); ?>" method="post" class="form-vertical well">
+		<form action="<?php echo site_url('add'); ?>" method="post" class="form-vertical well">
 			<div class="row">
 				<div class="span3">
 					<label for="name"><?php echo lang('paste_author'); ?>

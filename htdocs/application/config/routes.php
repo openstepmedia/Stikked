@@ -60,6 +60,7 @@ $route['spamadmin/blacklist/(:num)'] = 'spamadmin/blacklist';
 $route['spamadmin/blacklist/unblock/(:any)'] = 'spamadmin/unblock_ip';
 $route['spamadmin/:any'] = 'spamadmin/spam_detail';
 $route['about'] = 'main/about';
+$route['add'] = 'main/add';
 
 $route['iphone/:num'] = 'iphone';
 $route['iphone/view/:any'] = 'iphone/view';
