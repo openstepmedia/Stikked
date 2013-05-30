@@ -1,14 +1,14 @@
 <?php
 
-$lang['paste_create_new'] = 'Create a new paste';
-$lang['paste_create_new_desc'] = 'Here you can create a new paste';
+$lang['paste_create_new'] = 'Add code';
+$lang['paste_create_new_desc'] = 'Here you can create a new code snip';
 $lang['paste_author'] = 'Author';
 $lang['paste_author_desc'] = 'What\'s your name?';
 $lang['paste_title'] = 'Title';
-$lang['paste_title_desc'] = 'Give your paste a title.';
+$lang['paste_title_desc'] = 'Give your code a title.';
 $lang['paste_lang'] = 'Language';
 $lang['paste_lang_desc'] = 'What language is your paste written in?';
-$lang['paste_yourpaste'] = 'Your paste';
+$lang['paste_yourpaste'] = 'Your Kode';
 $lang['paste_yourpaste_desc'] = 'Paste your paste here';
 $lang['paste_enablesynhl'] = 'Enable realtime syntax highlighting';
 $lang['paste_disablesynhl'] = 'Disable realtime syntax highlighting';
@@ -18,8 +18,8 @@ $lang['paste_private'] = 'Private';
 $lang['paste_private_desc'] = 'Private paste aren\'t shown in recent listings.';
 $lang['paste_delete'] = 'Delete After';
 $lang['paste_delete_desc'] = 'When should we delete your paste?';
-$lang['paste_recent'] = 'Recent Pastes';
-$lang['paste_trending'] = 'Trending Pastes';
+$lang['paste_recent'] = 'Recent';
+$lang['paste_trending'] = 'Trending';
 $lang['paste_from'] = 'From';
 $lang['paste_ago'] = 'ago';
 $lang['paste_writtenin'] = 'written in';

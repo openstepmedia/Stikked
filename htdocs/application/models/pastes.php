@@ -415,13 +415,20 @@ class Pastes extends CI_Model
 		return $data;
 	}
 	
-	function getTrends($root = 'trends/', $seg = 2) 
+	function getTrends($root = 'trends/', $seg = 2, $filter=array()) 
 	{
 		$this->load->library('pagination');
 		$amount = $this->config->item('per_page');
 		$page = ($this->uri->segment(2) ? $this->uri->segment(2) : 0);
 		$this->db->select('id, title, name, created, pid, lang, raw, hits');
 		$this->db->where('private', 0);
+                
+                if(!empty($filter['where'])) {
+                    foreach($filter['where'] as $column => $key) {
+                        $this->db->where($column, $key);
+                    }
+                }
+                
 		$this->db->order_by('hits', 'desc');
 		$this->db->order_by('created', 'desc');
 		$query = $this->db->get('pastes', $amount, $page);
