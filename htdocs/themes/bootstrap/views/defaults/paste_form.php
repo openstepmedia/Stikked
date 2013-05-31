@@ -21,8 +21,15 @@
 					<label for="name"><?php echo lang('paste_author'); ?>
 					</label>
 					
-					<?php $set = array('name' => 'name', 'id' => 'name', 'class' => 'span3', 'value' => $name_set, 'maxlength' => '32', 'tabindex' => '1');
-					echo form_input($set);?>
+                                        <?php if($this->tank_auth->is_logged_in()) : ?>
+                                        <input type="input" name="" class="span3" value="<?php echo $this->session->userdata('username') ?>" readonly />
+                                        <input type="hidden" name="name" value="<?php echo $this->session->userdata('username') ?>"  />
+                                        <?php else: ?>
+					<?php 
+                                        $set = array('name' => 'name', 'id' => 'name', 'class' => 'span3', 'value' => $name_set, 'maxlength' => '32', 'tabindex' => '1');
+					echo form_input($set);
+                                        ?>
+                                        <?php endif; ?>
 				</div>
 				
 				<div class="span3">

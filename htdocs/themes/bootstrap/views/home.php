@@ -3,13 +3,6 @@
 <div class="row home">
     <div class="span10">
         <div class="content">
-            <?php if(!empty($message)) : ?>
-            <div class="alert alert-success">
-                <?php echo $message ?>
-            </div>
-            <?php endif; ?>
-            
-            
             <h1>Latest on the Kodeboard</h1>
             <div class="row">
                 <div class="span5 recent">

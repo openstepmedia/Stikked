@@ -69,10 +69,9 @@ $this->carabiner->display('css');
 		</header>
 
 		<div class="container">
-				<?php if(isset($status_message)){?>
-				<div class="message success change">
-					<div class="container">
-						<?php echo $status_message; ?>
-					</div>
+                    <?php $message = $this->session->flashdata('message'); ?>
+				<?php if(!empty($message)){?>
+                                <div class="alert alert-success">
+                                    <b><?php echo $message ?></b>
 				</div>
 				<?php }?>				

@@ -145,6 +145,7 @@ class Main extends CI_Controller {
         if (! $this->tank_auth->is_logged_in()) {	
             redirect("login");
         }
+//print "<pre>sess:"; print_r($this->session); exit;        
         
         $this->_valid_authentication();
         $this->load->helper('json');
@@ -216,6 +217,9 @@ class Main extends CI_Controller {
                     $this->session->set_userdata($user_data);
                 }
                 $redirect = $this->pastes->createPaste();
+                
+                $this->session->set_flashdata('message', 'Your kode has been saved!');
+                
                 redirect($redirect);
             }
         }
