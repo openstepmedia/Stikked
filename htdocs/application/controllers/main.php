@@ -142,6 +142,10 @@ class Main extends CI_Controller {
     }
 
     function add() {
+        if (! $this->tank_auth->is_logged_in()) {	
+            redirect("login");
+        }
+        
         $this->_valid_authentication();
         $this->load->helper('json');
 

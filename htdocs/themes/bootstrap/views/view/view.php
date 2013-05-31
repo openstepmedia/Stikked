@@ -101,10 +101,14 @@ if(isset($replies) and !empty($replies)){
 </section>
 <?php echo $pages;
 }
-
-	$reply_form['page']['title'] = lang('paste_replyto') . ' "' . $title . '"';
-	$reply_form['page']['instructions'] = lang('paste_replyto_desc');
-	$this->load->view('defaults/paste_form', $reply_form); ?>
-
-
+$reply_form['page']['title'] = lang('paste_replyto') . ' "' . $title . '"';
+$reply_form['page']['instructions'] = lang('paste_replyto_desc');
+?>
+<?php if($this->tank_auth->is_logged_in()) : ?>
+<?php $this->load->view('defaults/paste_form', $reply_form); ?>
+<?php else: ?>
+<div class="hero-unit">
+    <h2>You must <a href="<?php echo site_url('login') ?>">login</a> to reply or comment on this code.</h2>
+</div>
+<?php endif; ?>
 <?php $this->load->view('view/view_footer'); ?>
