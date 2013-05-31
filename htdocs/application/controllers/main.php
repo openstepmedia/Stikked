@@ -151,8 +151,9 @@ class Main extends CI_Controller {
         $this->load->helper('json');
 
         if (!$this->input->post('submit')) {
-            $data = $this->_form_prep();
-            $this->load->view('add', $data);
+            $lang = $this->session->userdata('last_lang');
+            $this->data = $this->_form_prep($lang);
+            $this->load->view('add', $this->data);
         } else {
             $this->load->model('pastes');
             $this->load->library('form_validation');
@@ -218,6 +219,7 @@ class Main extends CI_Controller {
                 }
                 $redirect = $this->pastes->createPaste();
                 
+                $this->session->set_userdata('last_lang', $user_data['lang']);
                 $this->session->set_flashdata('message', 'Your kode has been saved!');
                 
                 redirect($redirect);

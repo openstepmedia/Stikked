@@ -15,10 +15,10 @@ $config['site_name'] = 'Kodeboard';
  * The database structure will be created automatically
  *
 */
-$config['db_hostname'] = '127.0.0.1';
+$config['db_hostname'] = 'localhost';
 $config['db_database'] = 'kodeboard';
-$config['db_username'] = 'root';
-$config['db_password'] = '';
+$config['db_username'] = 'kodeboard';
+$config['db_password'] = 'xAwZKBBvyryFhszw';
 
 /**
  * Theme
