@@ -104,8 +104,7 @@ class Auth extends CI_Controller
 	function logout()
 	{
 		$this->tank_auth->logout();
-
-		$this->_show_message($this->lang->line('auth_message_logged_out'));
+                $this->_show_message($this->lang->line('auth_message_logged_out'), "/");
 	}
 
 	/**
@@ -458,10 +457,12 @@ class Auth extends CI_Controller
 	 * @param	string
 	 * @return	void
 	 */
-	function _show_message($message)
+	function _show_message($message, $redirect="/auth")
 	{
 		$this->session->set_flashdata('message', $message);
-		redirect('/auth/');
+                
+//print "<pre>s:$message"; print_r($this->session); exit;                
+		redirect($redirect);
 	}
 
 	/**

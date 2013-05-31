@@ -30,10 +30,13 @@
  */
 class Main extends CI_Controller {
 
+    private $data;
+    
     function __construct() {
         parent::__construct();
         $this->load->model('languages');
-
+        $this->load->library('tank_auth');
+        
         if (config_item('require_auth')) {
             $this->load->library('auth_ldap');
         }
@@ -45,200 +48,6 @@ class Main extends CI_Controller {
         if ($this->recaptcha_publickey != '' && $this->recaptcha_privatekey != '') {
             $this->load->helper('recaptcha');
             $this->use_recaptcha = true;
-        }
-
-        if (!$this->db->table_exists('ci_sessions')) {
-            $this->load->dbforge();
-            $fields = array(
-                'session_id' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 40,
-                    'default' => 0,
-                ),
-                'ip_address' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 45,
-                    'default' => 0,
-                ),
-                'user_agent' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 50,
-                ),
-                'last_activity' => array(
-                    'type' => 'INT',
-                    'constraint' => 10,
-                    'unsigned' => TRUE,
-                    'default' => 0,
-                ),
-                'session_data' => array(
-                    'type' => 'TEXT',
-                    'null' => TRUE,
-                ),
-            );
-            $this->dbforge->add_field($fields);
-            $this->dbforge->add_key('session_id', true);
-            $this->dbforge->create_table('ci_sessions', true);
-        }
-
-        if (!$this->db->table_exists('pastes')) {
-            $this->load->dbforge();
-            $fields = array(
-                'id' => array(
-                    'type' => 'INT',
-                    'constraint' => 10,
-                    'auto_increment' => TRUE,
-                ),
-                'pid' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 8,
-                ),
-                'title' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 50,
-                ),
-                'name' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 32,
-                ),
-                'lang' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 32,
-                ),
-                'private' => array(
-                    'type' => 'TINYINT',
-                    'constraint' => 1,
-                ),
-                'raw' => array(
-                    'type' => 'LONGTEXT',
-                ),
-                'created' => array(
-                    'type' => 'INT',
-                    'constraint' => 10,
-                ),
-                'expire' => array(
-                    'type' => 'INT',
-                    'constraint' => 10,
-                    'default' => 0,
-                ),
-                'toexpire' => array(
-                    'type' => 'TINYINT',
-                    'constraint' => 1,
-                    'unsigned' => TRUE,
-                    'default' => 0,
-                ),
-                'snipurl' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 64,
-                    'default' => 0,
-                ),
-                'replyto' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 8,
-                ),
-                'ip_address' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 16,
-                    'null' => TRUE,
-                ),
-                'hits' => array(
-                    'type' => 'INT',
-                    'constraint' => 10,
-                    'default' => 0,
-                ),
-                'hits_updated' => array(
-                    'type' => 'INT',
-                    'constraint' => 10,
-                    'default' => 0,
-                ),
-            );
-            $this->dbforge->add_field($fields);
-            $this->dbforge->add_key('id', true);
-            $this->dbforge->add_key('pid');
-            $this->dbforge->add_key('private');
-            $this->dbforge->add_key('replyto');
-            $this->dbforge->add_key('created');
-            $this->dbforge->add_key('ip_address');
-            $this->dbforge->add_key('hits');
-            $this->dbforge->add_key('hits_updated');
-            $this->dbforge->create_table('pastes', true);
-        }
-
-        if (!$this->db->table_exists('blocked_ips')) {
-            $this->load->dbforge();
-            $fields = array(
-                'ip_address' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 16,
-                    'default' => 0,
-                ),
-                'blocked_at' => array(
-                    'type' => 'INT',
-                    'constraint' => 10,
-                ),
-                'spam_attempts' => array(
-                    'type' => 'INT',
-                    'constraint' => 6,
-                    'default' => 0,
-                ),
-            );
-            $this->dbforge->add_field($fields);
-            $this->dbforge->add_key('ip_address', true);
-            $this->dbforge->create_table('blocked_ips', true);
-        }
-
-        if (!$this->db->table_exists('trending')) {
-            $this->load->dbforge();
-            $fields = array(
-                'paste_id' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 8,
-                ),
-                'ip_address' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 16,
-                    'default' => 0,
-                ),
-                'created' => array(
-                    'type' => 'INT',
-                    'constraint' => 10,
-                ),
-            );
-            $this->dbforge->add_field($fields);
-            $this->dbforge->add_key('paste_id', true);
-            $this->dbforge->add_key('ip_address', true);
-            $this->dbforge->add_key('created');
-            $this->dbforge->create_table('trending', true);
-        }
-
-        if (!$this->db->field_exists('ip_address', 'pastes')) {
-            $this->load->dbforge();
-            $fields = array(
-                'ip_address' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 16,
-                    'null' => TRUE,
-                ),
-            );
-            $this->dbforge->add_column('pastes', $fields);
-        }
-
-        if (!$this->db->field_exists('hits', 'pastes')) {
-            $this->load->dbforge();
-            $fields = array(
-                'hits' => array(
-                    'type' => 'INT',
-                    'constraint' => 10,
-                    'default' => 0,
-                ),
-                'hits_updated' => array(
-                    'type' => 'INT',
-                    'constraint' => 10,
-                    'default' => 0,
-                ),
-            );
-            $this->dbforge->add_key('hits');
-            $this->dbforge->add_key('hits_updated');
-            $this->dbforge->add_column('pastes', $fields);
         }
     }
 
@@ -268,6 +77,7 @@ class Main extends CI_Controller {
 
         if (!$this->input->post('submit')) {
 
+/*    
             if (!$this->db_session->userdata('expire')) {
                 $default_expiration = config_item('default_expiration');
                 $this->db_session->set_userdata('expire', $default_expiration);
@@ -280,6 +90,22 @@ class Main extends CI_Controller {
             $data['expire_set'] = $this->db_session->userdata('expire');
             $data['private_set'] = $this->db_session->userdata('private');
             $data['snipurl_set'] = $this->db_session->userdata('snipurl');
+ * 
+ */
+
+           if (!$this->session->userdata('expire')) {
+                $default_expiration = config_item('default_expiration');
+                $this->session->set_userdata('expire', $default_expiration);
+            }
+
+            if ($this->session->flashdata('settings_changed')) {
+                $data['status_message'] = 'Settings successfully changed';
+            }
+            $data['name_set'] = $this->session->userdata('name');
+            $data['expire_set'] = $this->session->userdata('expire');
+            $data['private_set'] = $this->session->userdata('private');
+            $data['snipurl_set'] = $this->session->userdata('snipurl');
+ 
             $data['paste_set'] = $paste;
             $data['title_set'] = $title;
             $data['reply'] = $reply;
@@ -298,20 +124,21 @@ class Main extends CI_Controller {
             $data['reply'] = $this->input->post('reply');
             $data['lang_set'] = $this->input->post('lang');
         }
+
         return $data;
     }
 
     function index() {
-        $this->_valid_authentication();
+        //$this->_valid_authentication();
         $this->load->helper('json');
 
         $this->load->model('pastes');
 
-        $data['recent'] = $this->pastes->getLists();
-        $data['trends'] = $this->pastes->getTrends();
+        $this->data['recent'] = $this->pastes->getLists();
+        $this->data['trends'] = $this->pastes->getTrends();
+        $this->data['message'] = $this->session->flashdata('message');
 
-
-        $this->load->view('home', $data);
+        $this->load->view('home', $this->data);
     }
 
     function add() {
@@ -381,7 +208,8 @@ class Main extends CI_Controller {
                         'snipurl' => $this->input->post('snipurl'),
                         'private' => $this->input->post('private'),
                     );
-                    $this->db_session->set_userdata($user_data);
+                    //$this->db_session->set_userdata($user_data);
+                    $this->session->set_userdata($user_data);
                 }
                 $redirect = $this->pastes->createPaste();
                 redirect($redirect);
@@ -493,12 +321,20 @@ class Main extends CI_Controller {
         $check = $this->pastes->checkPaste(2);
 
         if ($check) {
-
+/*
             if ($this->db_session->userdata('view_raw')) {
                 redirect('view/raw/' . $this->uri->segment(2));
             }
+ * 
+ */
+            if ($this->session->userdata('view_raw')) {
+                redirect('view/raw/' . $this->uri->segment(2));
+            }
+
             $data = $this->pastes->getPaste(2, true, $this->uri->segment(3) == 'diff');
+                             
             $data['reply_form'] = $this->_form_prep($data['lang_code'], 'Re: ' . $data['title'], $data['raw'], $data['pid']);
+
             $this->load->view('view/view', $data);
         } else {
             show_404();
@@ -533,7 +369,13 @@ class Main extends CI_Controller {
         $word = $str;
 
         //save
+        /*
         $this->db_session->set_userdata(array(
+            'captcha' => $word
+        ));
+         * 
+         */
+        $this->session->set_userdata(array(
             'captcha' => $word
         ));
 
@@ -557,7 +399,8 @@ class Main extends CI_Controller {
             if ($this->use_recaptcha) {
                 return $this->_valid_recaptcha();
             } else {
-                return strtolower($text) == strtolower($this->db_session->userdata('captcha'));
+                //return strtolower($text) == strtolower($this->db_session->userdata('captcha'));
+                return strtolower($text) == strtolower($this->session->userdata('captcha'));
             }
         } else {
             return true;
