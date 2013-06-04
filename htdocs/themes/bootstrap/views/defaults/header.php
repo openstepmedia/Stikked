@@ -10,6 +10,8 @@ $page_title .= $this->config->item('site_name');
 <html lang="en">
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+
+<meta name="google-site-verification" content="POEyVS-rw0dWVZ2HcT-cX548K3Y2wGZ5UVkwnrAMJGc" />
 		<title><?php echo $page_title; ?></title>
 <?php
 
@@ -37,6 +39,7 @@ $this->carabiner->display('css');
 	var base_url = '<?php echo base_url(); ?>';
 	//]]>
 	</script>
+        <meta name="google-site-verification" content="POEyVS-rw0dWVZ2HcT-cX548K3Y2wGZ5UVkwnrAMJGc" />
 	</head>
 	<body>		
 		<header>
