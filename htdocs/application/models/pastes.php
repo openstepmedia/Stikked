@@ -309,7 +309,7 @@ class Pastes extends CI_Model {
         return $data;
     }
 
-    function getLists($root = 'lists/', $seg = 2, $lang = "") {
+    function getLists($root = 'lists/', $seg = 2, $lang = "", $limit = "") {
         $this->load->library('pagination');
         $this->load->library('process');
         $amount = $this->config->item('per_page');
@@ -317,10 +317,16 @@ class Pastes extends CI_Model {
         $this->db->select('id, title, name, created, pid, lang, raw');
         $this->db->where('private', 0);
 
-
-
         $this->db->order_by('created', 'desc');
-        $query = $this->db->get('pastes', $amount, $page);
+        
+        if(!empty($limit)) {
+            $this->db->limit($limit);
+        }
+        else {
+            $this->db->limit($amount, $page);
+        }
+        
+        $query = $this->db->get('pastes');
 
         if ($query->num_rows() > 0) {
             $n = 0;
@@ -351,7 +357,7 @@ class Pastes extends CI_Model {
         return $data;
     }
 
-    function getTrends($root = 'trends/', $seg = 2, $filter = array()) {
+    function getTrends($root = 'trends/', $seg = 2, $filter = array(), $limit="") {
         $this->load->library('pagination');
         $amount = $this->config->item('per_page');
         $page = ($this->uri->segment(2) ? $this->uri->segment(2) : 0);
@@ -366,7 +372,15 @@ class Pastes extends CI_Model {
 
         $this->db->order_by('hits', 'desc');
         $this->db->order_by('created', 'desc');
-        $query = $this->db->get('pastes', $amount, $page);
+        
+        if(!empty($limit)) {
+            $this->db->limit($limit);
+        }
+        else {
+            $this->db->limit($amount, $page);
+        }
+        
+        $query = $this->db->get('pastes');
 
         if ($query->num_rows() > 0) {
             $n = 0;

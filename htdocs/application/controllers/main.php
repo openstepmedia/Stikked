@@ -134,8 +134,8 @@ class Main extends CI_Controller {
 
         $this->load->model('pastes');
 
-        $this->data['recent'] = $this->pastes->getLists();
-        $this->data['trends'] = $this->pastes->getTrends();
+        $this->data['recent'] = $this->pastes->getLists(null,null,null,30);
+        $this->data['trends'] = $this->pastes->getTrends(null,null,null,30);
         $this->data['message'] = $this->session->flashdata('message');
 
         $this->load->view('home', $this->data);
