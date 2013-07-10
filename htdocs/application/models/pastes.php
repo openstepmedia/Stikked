@@ -153,19 +153,13 @@ class Pastes extends CI_Model {
         $this->load->library('process');
         $this->db->where('pid', $pid);
         $query = $this->db->get('pastes');
+        
         foreach ($query->result_array() as $row) {
-            $data['title'] = $row['title'];
-            $data['pid'] = $row['pid'];
-            $data['name'] = $row['name'];
+            $data = array_merge($data, $row);
             $data['lang_code'] = $row['lang'];
             $data['lang'] = $this->languages->code_to_description($row['lang']);
             $data['paste'] = $this->process->syntax(htmlspecialchars_decode($row['raw']), $row['lang']);
-            $data['created'] = $row['created'];
             $data['url'] = $this->_get_url($row['pid']);
-            $data['raw'] = $row['raw'];
-            $data['hits'] = $row['hits'];
-            $data['hits_updated'] = $row['hits_updated'];
-            $data['snipurl'] = $row['snipurl'];
             $inreply = $row['replyto'];
         }
 

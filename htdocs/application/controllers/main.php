@@ -35,6 +35,7 @@ class Main extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('languages');
+        $this->load->model('pastes');
         $this->load->library('tank_auth');
         
         if (config_item('require_auth')) {
@@ -137,7 +138,9 @@ class Main extends CI_Controller {
         $this->data['recent'] = $this->pastes->getLists(null,null,null,30);
         $this->data['trends'] = $this->pastes->getTrends(null,null,null,30);
         $this->data['message'] = $this->session->flashdata('message');
-
+        
+        $this->data['title'] = "Code Snippets and Samples";
+        
         $this->load->view('home', $this->data);
     }
 
@@ -330,6 +333,8 @@ class Main extends CI_Controller {
         $this->load->model('pastes');
         $check = $this->pastes->checkPaste(2);
 
+        
+        
         if ($check) {
 /*
             if ($this->db_session->userdata('view_raw')) {
@@ -341,18 +346,35 @@ class Main extends CI_Controller {
                 redirect('view/raw/' . $this->uri->segment(2));
             }
 
-            $data = $this->pastes->getPaste(2, true, $this->uri->segment(3) == 'diff');
+            $this->data = $this->pastes->getPaste(2, true, $this->uri->segment(3) == 'diff');
                              
-            $data['reply_form'] = $this->_form_prep($data['lang_code'], 'Re: ' . $data['title'], $data['raw'], $data['pid']);
+            $this->data['reply_form'] = $this->_form_prep($this->data['lang_code'], 'Re: ' . $this->data['title'], $this->data['raw'], $this->data['pid']);
 
-            $this->load->view('view/view', $data);
+            $this->data['show_tools'] = 0;
+            if($this->session->userdata('user_id') == $this->data['user_id']) {
+                $this->data['show_tools'] = 1;
+            }
+
+            $this->load->view('view/view', $this->data);
         } else {
             show_404();
         }
     }
 
+    function edit() {
+        
+    }
+    
+    function delete($pid=null) {
+        if(!empty($pid)) {
+            $this->pastes->delete_paste($pid);
+            $this->session->set_flashdata('message', 'Kode Deleted');
+            redirect('/');
+        }
+    }
+    
     function cron() {
-        $this->load->model('pastes');
+        
         $key = $this->uri->segment(2);
 
         if ($key != config_item('cron_key')) {
